@@ -1,3 +1,47 @@
+import { useState } from "react";
+import { Button } from "./components/Button";
+import { FormAddFriend } from "./components/FormAddFriend";
+import { FormSplitBill } from "./components/FormSplitBill";
+import { FriendList } from "./components/FriendsList";
+
+export default function App() {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+  const [friends, setFriends] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState(null);
+
+  function handleShowAddFriend() {
+    setShowAddFriend((showAddFriend) => !showAddFriend);
+  }
+
+  function handleAddFriend(friend) {
+    setFriends((friends) => [...friends, friend]);
+  }
+
+  function handleSelectedFriend(friend) {
+    setSelectedFriend((selected) =>
+      selected?.id === friend.id ? null : friend
+    );
+    setShowAddFriend(false);
+  }
+
+  return (
+    <div className="app">
+      <div className="sidebar">
+        <FriendList
+          friends={friends}
+          selectedFriend={selectedFriend}
+          onSelectedFriend={handleSelectedFriend}
+        />
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
+        <Button onClick={handleShowAddFriend}>
+          {showAddFriend ? "Close" : "Add friend"}
+        </Button>
+      </div>
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
+    </div>
+  );
+}
+
 const initialFriends = [
   {
     id: 118836,
