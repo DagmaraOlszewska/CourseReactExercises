@@ -110,7 +110,6 @@ const containerStyle = {
   display: "flex",
   alignItems: "center",
   gap: "16px",
-  backgroundColor: "white",
 };
 
 const starContainerStyle = {
